@@ -56,7 +56,7 @@ Install jsgrid with bower:
 
 ```bash
 
-$ bower install js-grid 
+$ bower install js-grid
 
 ```
 
@@ -183,7 +183,7 @@ General options peculiar to all field types:
     filtercss: "",
     insertcss: "",
     editcss: "",
-    
+
     filtering: true,
     inserting: true,
     editing: true,
@@ -678,12 +678,12 @@ var grid = $("#grid").data("JSGrid");
 var grid = new jsGrid.Grid($("#grid"), { ... });
 
 // call method directly
-grid.methodName(param1, param2); 
+grid.methodName(param1, param2);
 
 ```
 
 ### cancelEdit()
-Cancels row editing. 
+Cancels row editing.
 
 ```javascript
 
@@ -693,7 +693,7 @@ $("#grid").jsGrid("cancelEdit");
 
 ### clearFilter(): `Promise`
 Clears current filter and performs search with empty filter.
-Returns jQuery promise resolved when data filtering is completed. 
+Returns jQuery promise resolved when data filtering is completed.
 
 ```javascript
 
@@ -704,7 +704,7 @@ $("#grid").jsGrid("clearFilter").done(function() {
 ```
 
 ### clearInsert()
-Clears current inserting row. 
+Clears current inserting row.
 
 ```javascript
 
@@ -712,11 +712,13 @@ $("#grid").jsGrid("clearInsert");
 
 ```
 
-### deleteItem(item|$row|rowNode): `Promise`
+### deleteItem(item|$row|rowNode, [doNotConfirm:boolean]): `Promise`
 Removes specified row from the grid.
 Returns jQuery promise resolved when deletion is completed.
 
 **item|$row|rowNode** is the reference to the item or the row jQueryElement or the row DomNode.
+
+**doNotConfirm** is optional, and, if true, will suppress delete confirmation even if it is switched on for the grid.
 
 ```javascript
 
@@ -769,9 +771,9 @@ var filter = $("#grid").jsGrid("getFilter");
 
 ### insertItem([item]): `Promise`
 Inserts row into the grid based on item.
-Returns jQuery promise resolved when insertion is completed. 
- 
-**item** is the item to pass to `controller.insertItem`. 
+Returns jQuery promise resolved when insertion is completed.
+
+**item** is the item to pass to `controller.insertItem`.
 
 If `item` is not specified the data from inserting row will be inserted.
 
@@ -795,10 +797,10 @@ Opens the page of specified index.
 
 ### option(key, [value])
 Gets or sets the value of an option.
- 
+
 **key** is the name of the option.
 
-**value** is the new option value to set. 
+**value** is the new option value to set.
 
 If `value` is not specified, then the value of the option `key` will be returned.
 
@@ -822,8 +824,8 @@ $("#grid").jsGrid("refresh");
 ```
 
 ### render(): `Promise`
-Performs complete grid rendering. If option `autoload` is `true` calls `controller.loadData`. The state of the grid like current page and sorting is retained. 
-Returns jQuery promise resolved when data loading is completed. If auto-loading is disabled the promise is instantly resolved.   
+Performs complete grid rendering. If option `autoload` is `true` calls `controller.loadData`. The state of the grid like current page and sorting is retained.
+Returns jQuery promise resolved when data loading is completed. If auto-loading is disabled the promise is instantly resolved.
 
 ```javascript
 
@@ -844,9 +846,9 @@ $("#grid").jsGrid("reset");
 
 ### search([filter]): `Promise`
 Performs filtering of the grid.
-Returns jQuery promise resolved when data loading is completed. 
- 
-**filter** is a filter to pass to `controller.loadData`. 
+Returns jQuery promise resolved when data loading is completed.
+
+**filter** is a filter to pass to `controller.loadData`.
 
 If `filter` is not specified the current filter (filtering row values) will be applied.
 
@@ -902,7 +904,7 @@ $("#grid").jsGrid("sort", 0);
 // sorting grid by field "Name" in descending order
 $("#grid").jsGrid("sort", { field: "Name", order: "desc" });
 
-// sorting grid by myField in ascending order 
+// sorting grid by myField in ascending order
 $("#grid").jsGrid("sort", myField, "asc").done(function() {
     console.log("sorting completed");
 });
@@ -912,7 +914,7 @@ $("#grid").jsGrid("sort", myField, "asc").done(function() {
 ### updateItem([item|$row|rowNode], [editedItem]): `Promise`
 Updates item and row of the grid.
 Returns jQuery promise resolved when update is completed.
- 
+
 **item|$row|rowNode** is the reference to the item or the row jQueryElement or the row DomNode.
 
 **editedItem** is the changed item to pass to `controller.updateItem`.
@@ -988,7 +990,7 @@ Has following arguments:
 
 {
     grid                // grid instance
-    data                // load result (array of items or data structure for loading by page scenario) 
+    data                // load result (array of items or data structure for loading by page scenario)
 }
 
 ```
@@ -1002,7 +1004,7 @@ Has following arguments:
 
 {
     grid                // grid instance
-    args                // an array of arguments provided to fail promise handler 
+    args                // an array of arguments provided to fail promise handler
 }
 
 ```
@@ -1163,7 +1165,7 @@ Has following arguments:
 
 The controller is a gateway between grid and data storage. All data manipulations call accordant controller methods.
 By default grid has an empty controller and can work with static array of items stored in option `data`.
- 
+
 A controller should implement following interface:
 
 ```javascript
@@ -1190,7 +1192,7 @@ For instance the controller for typical REST service might look like:
             dataType: "json"
         });
     },
-    
+
     insertItem: function(item) {
         return $.ajax({
             type: "POST",
@@ -1199,7 +1201,7 @@ For instance the controller for typical REST service might look like:
             dataType: "json"
         });
     },
-    
+
     updateItem: function(item) {
         return $.ajax({
             type: "PUT",
@@ -1208,7 +1210,7 @@ For instance the controller for typical REST service might look like:
             dataType: "json"
         });
     },
-    
+
     deleteItem: function(item) {
         return $.ajax({
             type: "DELETE",
@@ -1249,9 +1251,9 @@ When grid sorting is enabled, `filter` includes two more parameters:
 ```
 
 Method should return `dataResult` or jQuery promise that will be resolved with `dataResult`.
-  
+
 **dataResult** depends on `pageLoading`. When `pageLoading` is `false` (by default), then data result is a plain javascript array of objects.
-If `pageLoading` is `true` data result should have following structure 
+If `pageLoading` is `true` data result should have following structure
 
 ```javascript
 
@@ -1265,8 +1267,8 @@ If `pageLoading` is `true` data result should have following structure
 ### insertItem(item): `Promise|insertedItem`
 Called on item insertion.
 
-Method should return `insertedItem` or jQuery promise that will be resolved with `insertedItem`. 
-If no item is returned, inserting item will be used as inserted item. 
+Method should return `insertedItem` or jQuery promise that will be resolved with `insertedItem`.
+If no item is returned, inserting item will be used as inserted item.
 
 **item** is the item to be inserted.
 
@@ -1331,7 +1333,7 @@ var clients = [{
 
 // sort clients by name and then by age
 jsGrid.sortStrategies.client = function(client1, client2) {
-    return client1.Name.localeCompare(client2.Name) 
+    return client1.Name.localeCompare(client2.Name)
         || client1.Age - client2.Age;
 };
 
@@ -1357,20 +1359,15 @@ Worth to mention, that if you need particular sorting only once, you can just in
 {
     fields: [
       ...
-      { 
-          type: "text", 
-          name: "Name", 
+      {
+          type: "text",
+          name: "Name",
           sorter: function(client1, client2) {
-              return client1.Name.localeCompare(client2.Name) 
+              return client1.Name.localeCompare(client2.Name)
                   || client1.Age - client2.Age;
-          } 
+          }
       },
       ...
     ]
 }
 ```
-
-
-
-
-
