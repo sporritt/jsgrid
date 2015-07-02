@@ -143,6 +143,7 @@
         onError: $.noop,
 
         containerClass: "jsgrid",
+        editableContainerClass:"jsgrid-editable",
         tableClass: "jsgrid-table",
         gridHeaderClass: "jsgrid-grid-header",
         gridBodyClass: "jsgrid-grid-body",
@@ -305,6 +306,8 @@
                 .css("position", "relative")
                 .append(this._createHeader())
                 .append(this._createBody());
+
+            if (this.editing) this._container.addClass(this.editableContainerClass);
 
             this._pagerContainer = this._createPagerContainer();
             this._loadIndicator = this._createLoadIndicator();
