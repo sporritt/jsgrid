@@ -144,6 +144,7 @@
 
         containerClass: "jsgrid",
         editableContainerClass:"jsgrid-editable",
+        appendableContainerClass:"jsgrid-appendable",
         tableClass: "jsgrid-table",
         gridHeaderClass: "jsgrid-grid-header",
         gridBodyClass: "jsgrid-grid-body",
@@ -308,6 +309,7 @@
                 .append(this._createBody());
 
             if (this.editing) this._container.addClass(this.editableContainerClass);
+            if (this.appending) this._container.addClass(this.appendableContainerClass);
 
             this._pagerContainer = this._createPagerContainer();
             this._loadIndicator = this._createLoadIndicator();
