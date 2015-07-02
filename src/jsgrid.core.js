@@ -1125,13 +1125,13 @@
             this._editingRow = null;
         },
 
-        deleteItem: function(item) {
+        deleteItem: function(item, doNotConfirm) {
             var $row = this._rowByItem(item);
 
             if(!$row.length)
                 return;
 
-            if(this.confirmDeleting && !window.confirm(getOrApply(this.deleteConfirm, this, $row.data(JSGRID_ROW_DATA_KEY))))
+            if(!doNotConfirm && this.confirmDeleting && !window.confirm(getOrApply(this.deleteConfirm, this, $row.data(JSGRID_ROW_DATA_KEY))))
                 return;
 
             return this._deleteRow($row);
